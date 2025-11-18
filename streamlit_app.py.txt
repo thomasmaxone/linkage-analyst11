@@ -1,0 +1,53 @@
+import streamlit as st
+import streamlit.components.v1 as components
+
+st.set_page_config(layout="wide")
+st.markdown(
+    """
+    <style>
+        .reportview-container .main .block-container {
+            padding-top: 2rem;
+            padding-bottom: 0rem;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+st.title("Analyst's Notebook Web Clone")
+
+col1, col2, col3 = st.columns([1,4,1])
+
+with col1:
+    st.header("Palette")
+    st.write("Drag items to the canvas.")
+    st.markdown(
+        """
+        <div style="border:1px solid #999;border-radius:3px;padding:10px;margin:10px 0;">
+            <div draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Person');">
+                👤 Person
+            </div>
+            <div draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Event');">
+                🗓️ Event
+            </div>
+            <div draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Location');">
+                📍 Location
+            </div>
+        </div>
+        """, unsafe_allow_html=True
+    )
+
+with col2:
+    st.header("Diagram Canvas")
+    with open("diagram_component.html") as f:
+        html_string = f.read()
+    components.html(html_string, height=700, width=950)
+
+with col3:
+    st.header("Entity Inspector")
+    st.write("Click a node or link to view/edit details here. (WIP)")
+    st.info("Node and link details will show up here when implemented.")
+
+st.success("👈 Drag Palette items to Canvas to create entities. Connect by clicking node, then node. Click items to inspect (right menu WIP).")
